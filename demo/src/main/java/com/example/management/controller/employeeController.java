@@ -42,7 +42,7 @@ public class employeeController {
 	
 	@GetMapping("/test/{number}")
     public String test(@PathVariable int number) {
-        if (number < 0) {
+        if (number <= 0) {
             throw new CustomException("Number cannot be negative!");
         }
         return "Valid number: " + number;
