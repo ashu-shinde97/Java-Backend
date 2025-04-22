@@ -36,13 +36,13 @@ public class employeeController {
 	public Employee employeeById(@PathVariable Integer id ) {
 //		Employee employeebyId = employeerepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeption("Employee not found by id" + id));
 //		return ResponseEntity.ok(employeebyId);
-		//.....id.
+		//.....id....
 		return employeerepository.findById(id).get();
 	}    
 	
 	@GetMapping("/test/{number}")
     public String test(@PathVariable int number) {
-        if (number < 0) {
+        if (number <= 0) {
             throw new CustomException("Number cannot be negative!");
         }
         return "Valid number: " + number;
