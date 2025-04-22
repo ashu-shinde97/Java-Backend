@@ -36,7 +36,7 @@ public class employeeController {
 	public Employee employeeById(@PathVariable Integer id ) {
 //		Employee employeebyId = employeerepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeption("Employee not found by id" + id));
 //		return ResponseEntity.ok(employeebyId);
-		//.....id.
+		//.....id....
 		return employeerepository.findById(id).get();
 	}    
 	
