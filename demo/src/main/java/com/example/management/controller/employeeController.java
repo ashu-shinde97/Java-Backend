@@ -33,7 +33,7 @@ public class employeeController {
 		return employeerepository.findAll();
 	}
 	
-	@GetMapping(value = "/employees/{id}")
+	@GetMapping("/employees/{id}")
 	public Employee employeeById(@PathVariable Integer id ) {
 //		Employee employeebyId = employeerepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeption("Employee not found by id" + id));
 //		return ResponseEntity.ok(employeebyId);
@@ -66,5 +66,25 @@ public class employeeController {
 		employeerepository.deleteById(id);
 		return ResponseEntity.ok("User deleted successfully");
 	}
+	
+	 @GetMapping("/card-type/{cardNumber}")
+	    public ResponseEntity<String> getCardType(@PathVariable String cardNumber) {
+	        if (cardNumber == null || cardNumber.isEmpty()) {
+	            return ResponseEntity.badRequest().body("Card number is required");
+	        }
+
+	        char firstDigit = cardNumber.charAt(0);
+
+	        String cardType;
+	        if (firstDigit == '4' || firstDigit == '5') {
+	            cardType = "Credit Card";
+	        } else if (firstDigit == '6') {
+	            cardType = "Debit Card";
+	        } else {
+	            cardType = "Unknown Card Type";
+	        }
+
+	        return ResponseEntity.ok(cardType);
+	    }
 
 }
