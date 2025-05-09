@@ -59,5 +59,24 @@ public class employeeController {
 		Employee updatedUser = employeerepository.save(employee); // If ID exists, it updates
 	    return ResponseEntity.ok(updatedUser);
 	}
+	@GetMapping("/card-type/{cardNumber}")
+    public ResponseEntity<String> getCardType(@PathVariable String cardNumber) {
+        if (cardNumber == null || cardNumber.isEmpty()) {
+            return ResponseEntity.badRequest().body("Card number is required");
+        }
+
+        char firstDigit = cardNumber.charAt(0);
+
+        String cardType;
+        if (firstDigit == '4' || firstDigit == '5') {
+            cardType = "Credit Card";
+        } else if (firstDigit == '6') {
+            cardType = "Debit Card";
+        } else {
+            cardType = "Unknown Card Type";
+        }
+
+        return ResponseEntity.ok(cardType);
+	}
 
 }
