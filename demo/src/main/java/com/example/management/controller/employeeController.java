@@ -86,5 +86,11 @@ public class employeeController {
 
 	        return ResponseEntity.ok(cardType);
 	    }
+	 @GetMapping("/employee/{id}")
+	    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
+	        Employee employee = employeerepository.findById(id)
+	                .orElseThrow(() -> new ResourceNotFoundExeption("Employee not found with id: " + id));
+	        return ResponseEntity.ok(employee);
+	    }
 
 }
