@@ -26,7 +26,7 @@ public class StudentController {
     }
 
     public ResponseEntity<Student> CrateStudent(@RequestBody Student student){
-        Student Crete = studentRepository.save(student);
-        return ResponseEntity.ok(Crete);
+        Student Create = studentRepository.save(student);
+        return ResponseEntity.ok(Create);
     }
 }
