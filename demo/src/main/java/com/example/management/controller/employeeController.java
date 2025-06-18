@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.example.management.Exception.CustomException;
-import com.example.management.Exception.ResourceNotFoundExeption;
+import com.example.management.Exception.ResourceNotFoundException;
 import com.example.management.Repository.EmployeeRepository;
 import com.example.management.model.Employee;
 
@@ -89,8 +87,9 @@ public class employeeController {
 	 @GetMapping("/employee/{id}")
 	    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
 	        Employee employee = employeerepository.findById(id)
-	                .orElseThrow(() -> new ResourceNotFoundExeption("Employee not found with id: " + id));
+	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
 	        return ResponseEntity.ok(employee);
+
 	    }
 
 }
