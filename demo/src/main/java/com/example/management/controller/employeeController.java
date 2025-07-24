@@ -2,6 +2,7 @@ package com.example.management.controller;
 
 import java.util.List;
 
+import com.example.management.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +24,12 @@ import com.example.management.model.Employee;
 public class employeeController {
 
     @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
     private EmployeeRepository employeerepository;
+
+
 
 
     @GetMapping("/employees")
@@ -47,10 +53,24 @@ public class employeeController {
         return "Valid number: " + number;
     }
 
+//    @PostMapping("/CreateUser")
+//    public ResponseEntity<Employee> createUser(@RequestBody Employee employee) {
+//        Employee saved = employeerepository.save(employee);
+//        return ResponseEntity.ok(saved);
+//    }
+
     @PostMapping("/CreateUser")
     public ResponseEntity<Employee> createUser(@RequestBody Employee employee) {
-        Employee saved = employeerepository.save(employee);
-        return ResponseEntity.ok(saved);
+        if (employee.getFirstname() == null || employee.getLastname() == null || employee.getEmailid() == null) {
+            throw new CustomException("Firstname, Lastname, and Emailid are required");
+        }
+        try {
+            Employee saved = employeeService.createUser(employee);
+            return ResponseEntity.ok(saved);
+        } catch (Exception ex) {
+            // Log the exception (use a logger in real scenarios)
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 
     @PutMapping("/updateUser")
