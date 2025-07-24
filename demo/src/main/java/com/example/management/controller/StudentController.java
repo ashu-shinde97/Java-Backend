@@ -16,17 +16,18 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @GetMapping("/Students")
-    public List<Student> GetAllStudent(){
+    public List<Student> GetAllStudent() {
         return studentRepository.findAll();
     }
 
     @GetMapping("/student/{id}")
-    public Student GetStudentById(@PathVariable Long id){
+    public Student GetStudentById(@PathVariable Long id) {
         return studentRepository.findById(id).get();
     }
 
-    public ResponseEntity<Student> CrateStudent(@RequestBody Student student){
+    public ResponseEntity<Student> CrateStudent(@RequestBody Student student) {
         Student Create = studentRepository.save(student);
         return ResponseEntity.ok(Create);
+
     }
 }

@@ -15,7 +15,7 @@ public class WeatherController {
 
     @Autowired
     private WeatherService weatherService;
-    
+
 
     @GetMapping("/current")
     public ResponseEntity<String> getCurrentWeather(@RequestParam String city) {
