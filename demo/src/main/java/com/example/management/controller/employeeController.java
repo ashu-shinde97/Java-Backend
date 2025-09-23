@@ -2,6 +2,7 @@ package com.example.management.controller;
 
 import java.util.List;
 
+import com.example.management.Exception.MissingInputException;
 import com.example.management.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,9 @@ public class employeeController {
     }
 
     @GetMapping("/test/{number}")
-    public String test(@PathVariable int number) {
+    public String test(@PathVariable int number) throws ResourceNotFoundException {
         if (number <= 0) {
-            throw new CustomException("Number cannot be negative!");
+            throw new ResourceNotFoundException("Number cannot be negative!");
         }
         return "Valid number: " + number;
     }
@@ -60,17 +61,18 @@ public class employeeController {
 //    }
 
     @PostMapping("/CreateUser")
-    public ResponseEntity<Employee> createUser(@RequestBody Employee employee) {
-        if (employee.getFirstname() == null || employee.getLastname() == null || employee.getEmailid() == null) {
-            throw new CustomException("Firstname, Lastname, and Emailid are required");
-        }
-        try {
-            Employee saved = employeeService.createUser(employee);
-            return ResponseEntity.ok(saved);
-        } catch (Exception ex) {
-            // Log the exception (use a logger in real scenarios)
-            return ResponseEntity.internalServerError().body(null);
-        }
+    public ResponseEntity<String> createUser(@RequestBody Employee employee) throws MissingInputException {
+//        if (employee.getFirstname() == null || employee.getLastname() == null || employee.getEmailid() == null) {
+//            throw new ResourceNotFoundException("Firstname, Lastname, and Emailid are required");
+//        }
+//        try {
+            employeeService.createUser(employee);
+            return ResponseEntity.ok("Employee created successfully");
+//       }
+//        catch (Exception ex) {
+//            // Log the exception (use a logger in real scenarios)
+//            return ResponseEntity.internalServerError().body(null);
+//        }
     }
 
     @PutMapping("/updateUser")
@@ -106,10 +108,11 @@ public class employeeController {
     }
 
     @GetMapping("/employee/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) throws ResourceNotFoundException {
         Employee employee = employeerepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
         return ResponseEntity.ok(employee);
+        //aaaa
 
     }
 
