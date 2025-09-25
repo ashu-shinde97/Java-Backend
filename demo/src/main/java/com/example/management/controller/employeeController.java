@@ -30,9 +30,6 @@ public class employeeController {
     @Autowired
     private EmployeeRepository employeerepository;
 
-
-
-
     @GetMapping("/employees")
     public List<Employee> getAllEmployee() {
         return employeerepository.findAll();
