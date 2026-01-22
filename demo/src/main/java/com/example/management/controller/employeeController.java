@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.management.Exception.MissingInputException;
 import com.example.management.service.EmployeeService;
+import jakarta.transaction.Synchronization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,16 +32,17 @@ public class employeeController {
     private EmployeeRepository employeerepository;
 
     @GetMapping("/employees")
-    public List<Employee> getAllEmployee() {
-        return employeerepository.findAll();
+    public ResponseEntity<List<Employee>> getAllEmployee() {
+
+        return employeeService.GetAllEmpoyee();
     }
 
     @GetMapping("/employees/{id}")
-    public Employee employeeById(@PathVariable Integer id) {
+    public ResponseEntity<Employee> employeeById(@PathVariable Integer id) throws ResourceNotFoundException {
 //		Employee employeebyId = employeerepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeption("Employee not found by id" + id));
 //		return ResponseEntity.ok(employeebyId);
         //.....id....
-        return employeerepository.findById(id).get();
+        return employeeService.EmployeeById(id);
     }
 
     @GetMapping("/test/{number}")
